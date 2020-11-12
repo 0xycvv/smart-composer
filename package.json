@@ -2,17 +2,30 @@
   "name": "smart-composer",
   "version": "0.0.1",
   "description": "smart compose for input and textarea",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
+  "browser": "dist/main.js",
+  "module": "dist/main.esm.js",
+  "exports": {
+    ".": "./esm/index.js"
+  },
   "scripts": {
     "watch": "node build.js -watch",
-    "build": "node build.js",
+    "build": "node build.js -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "ui",
+    "auto-complete",
+    "smart-compose"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ericyip/smart-composer.git"
   },
-  "author": "",
+  "author": {
+    "name": "Eric Yip",
+    "email": "letitbemine@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ericyip/smart-composer/issues"

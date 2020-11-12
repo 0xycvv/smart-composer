@@ -1,4 +1,7 @@
 interface Config {
+  /**
+   * element Id
+   */
   target: string;
   triggerKey: string;
   defaultPredictValue?: string;

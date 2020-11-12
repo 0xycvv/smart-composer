@@ -2,18 +2,53 @@
 const { build, cliopts } = require('estrella');
 const Path = require('path');
 
-build({
-  entry: 'src/main.ts',
-  outfile: 'dist/main.js',
-  bundle: true,
-  sourcemap: true,
-  minify: true,
-  format: 'iife',
-  globalName: 'SmartComposer',
-});
+const [opts, args] = cliopts.parse([
+  'p, prepare',
+  'prepare for publish',
+]);
 
-cliopts.watch &&
+const common = {
+  entry: 'src/main.ts',
+  bundle: true,
+};
+
+if (cliopts.watch) {
+  build({
+    ...common,
+    // bundle: true,
+    outfile: 'dist/main.js',
+    sourcemap: true,
+    format: 'iife',
+    globalName: 'SmartComposer',
+  });
   require('serve-http').createServer({
     port: 8181,
-    indexFilename: 'example.html'
+    indexFilename: 'example.html',
   });
+}
+
+if (opts.prepare) {
+  build({
+    ...common,
+    outfile: 'dist/main.js',
+    minify: true,
+    format: 'iife',
+    globalName: 'SmartComposer',
+  });
+
+  build({
+    ...common,
+    outfile: 'dist/main.cjs.js',
+    minify: true,
+    format: 'cjs',
+    globalName: 'SmartComposer',
+  });
+
+  build({
+    ...common,
+    outfile: 'dist/main.esm.js',
+    minify: true,
+    format: 'esm',
+    globalName: 'SmartComposer',
+  });
+}
