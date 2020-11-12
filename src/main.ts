@@ -34,7 +34,7 @@ class SmartComposer {
   }
 
   get currentValue() {
-    return this.target?.value;
+    return this.target && this.target.value;
   }
 
   get composerValue() {

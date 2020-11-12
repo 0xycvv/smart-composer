@@ -2,11 +2,15 @@
   "name": "smart-composer",
   "version": "0.0.1",
   "description": "smart compose for input and textarea",
-  "main": "dist/main.js",
-  "browser": "dist/main.js",
+  "main": "dist/main.cjs.js",
+  "jsdelivr": "dist/main.js",
   "module": "dist/main.esm.js",
+  "typings": "./src/main.d.ts",
   "exports": {
-    ".": "./esm/index.js"
+    ".": {
+      "require": "./dist/main.cjs.js",
+      "import": "./dist/main.esm.js"
+    }
   },
   "scripts": {
     "watch": "node build.js -watch",
@@ -34,6 +38,7 @@
   "devDependencies": {
     "esbuild": "^0.8.6",
     "estrella": "^1.2.10",
-    "serve-http": "^1.0.6"
+    "serve-http": "^1.0.6",
+    "typescript": "^4.0.5"
   }
 }
