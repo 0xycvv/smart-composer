@@ -78,7 +78,6 @@ class SmartComposer {
   }
 
   clear() {
-    console.log('clear');
     this.composerInput.value = '';
     this.predicted = '';
     this.isPredicating = false;
@@ -87,7 +86,6 @@ class SmartComposer {
   insertPredictValue(value: string) {
     this.predicted = value;
     if (this.predicted) {
-      console.log(this.target.value, this.predicted);
       this.composerInput.value =
         this.valueBeforePredict + this.predicted;
     } else {
@@ -103,6 +101,22 @@ class SmartComposer {
       return this.config.predict(this);
     }
     return Promise.resolve(this.config.predict(this));
+  }
+
+  private dispatchChangeOnTarget(value: string = '') {
+    // trigger react on change with native setter
+    try {
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+        // @ts-ignore
+        window[this.target.constructor.name].prototype,
+        'value',
+      ).set;
+      nativeInputValueSetter.call(this.target, value);
+    } catch (error) {
+      this.target.value = value;
+    }
+    const event = new Event('input', { bubbles: true });
+    this.target.dispatchEvent(event);
   }
 
   private insertComposerWithStyles() {
@@ -138,9 +152,11 @@ class SmartComposer {
       this.isPredicating = false;
     }
     if (e.key === 'Tab') {
-      if (this.isPredicating) {
+      if (this.isPredicating && this.predicted) {
         e.preventDefault();
-        this.target.value = this.valueBeforePredict + this.predicted;
+        this.dispatchChangeOnTarget(
+          this.valueBeforePredict + this.predicted,
+        );
         this.clear();
       }
     }
@@ -180,16 +196,6 @@ class SmartComposer {
   }
 }
 
+export default SmartComposer;
+
 module.exports = SmartComposer;
-
-function hexToRGB(hex: string, alpha: string) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-
-  if (alpha) {
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  } else {
-    return `rgba(${r}, ${g}, ${b})`;
-  }
-}

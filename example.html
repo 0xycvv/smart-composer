@@ -34,6 +34,7 @@
       const i = new SmartComposer({
         target: 'input-1',
         triggerKey: '@',
+        defaultPredictValue: 'gmail.com',
         predict: (sm) => {
           const got = domains.find((d) =>
             d.startsWith(sm.valueAfterPredict),
