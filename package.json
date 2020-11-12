@@ -1,0 +1,26 @@
+{
+  "name": "smart-composer",
+  "version": "0.0.1",
+  "description": "smart compose for input and textarea",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "node build.js -watch",
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericyip/smart-composer.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericyip/smart-composer/issues"
+  },
+  "homepage": "https://github.com/ericyip/smart-composer#readme",
+  "devDependencies": {
+    "esbuild": "^0.8.6",
+    "estrella": "^1.2.10",
+    "serve-http": "^1.0.6"
+  }
+}
