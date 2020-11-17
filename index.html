@@ -14,19 +14,27 @@
   </head>
   <body>
     <div style="position: relative">
-      <input type="text" id="input-1" />
+      <input
+        type="text"
+        placeholder="enter your email"
+        id="input-1"
+      />
     </div>
-    <textarea name="text-area" id="textarea"></textarea>
+    <textarea
+      name="text-area"
+      id="textarea"
+      placeholder="Auto suggestion when you enter some words..."
+    ></textarea>
     <script src="../dist/main.js"></script>
     <script>
       const smInstance = new SmartComposer({
         target: 'textarea',
-        triggerKey: '@',
-        predict: (sm) => {
-          const got = domains.find((d) =>
-            d.startsWith(sm.valueAfterPredict),
-          );
-          return got;
+        triggerKey: ' ',
+        predict: async (sm) => {
+          const words = await suggestAPI(sm.valueBeforePredict);
+          if (words[0]) {
+            return words[0].word;
+          }
         },
       });
       smInstance.attach();
@@ -43,6 +51,17 @@
         },
       });
       i.attach();
+
+      // demo use
+      const suggestAPI = (keyword) =>
+        fetch(
+          `https://api.datamuse.com/sug?s=${decodeURI(keyword)}`,
+          {
+            mode: 'cors',
+          },
+        ).then((res) => {
+          return res.json();
+        });
 
       const domains = [
         /* Default domains included */

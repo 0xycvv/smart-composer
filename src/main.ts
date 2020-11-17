@@ -135,6 +135,7 @@ class SmartComposer {
     this.composerInput.style.pointerEvents = 'none';
     this.composerInput.value = '';
     this.composerInput.placeholder = '';
+    this.composerInput.setAttribute('aria-hidden', 'true');
     this.target.style.position = 'relative';
     this.target.style.background = 'transparent';
     this.target.setAttribute('aria-readonly', 'true');
@@ -181,6 +182,14 @@ class SmartComposer {
       this.valueBeforePredict = this.target.value;
       if (this.config.defaultPredictValue) {
         this.insertPredictValue(this.config.defaultPredictValue);
+      } else {
+        this.callPredict().then((res) => {
+          if (res) {
+            this.insertPredictValue(res);
+          } else {
+            this.clear();
+          }
+        });
       }
     }
   }

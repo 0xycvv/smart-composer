@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/ericyip/smart-composer#readme",
   "devDependencies": {
+    "@types/node": "^14.14.7",
     "esbuild": "^0.8.6",
     "estrella": "^1.2.10",
     "serve-http": "^1.0.6",

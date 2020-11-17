@@ -23,7 +23,7 @@ if (cliopts.watch) {
   });
   require('serve-http').createServer({
     port: 8181,
-    indexFilename: 'example.html',
+    indexFilename: 'index.html',
   });
 }
 
