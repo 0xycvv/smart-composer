@@ -1,6 +1,6 @@
 {
   "name": "smart-composer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "smart compose for input and textarea",
   "main": "dist/main.cjs.js",
   "jsdelivr": "dist/main.js",
