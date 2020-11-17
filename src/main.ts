@@ -62,7 +62,6 @@ class SmartComposer {
     if (this.isReady) {
       const clone = this.target.cloneNode(false);
       if (isWritableElement(clone)) {
-        clone.id = '';
         this.composerInput = clone;
         const canInsert = this.checkParentPosition();
         if (canInsert) {
@@ -133,8 +132,9 @@ class SmartComposer {
       .replace(')', ', 0.6)')
       .replace('rgb', 'rgba');
     this.composerInput.style.pointerEvents = 'none';
-    this.composerInput.value = '';
-    this.composerInput.placeholder = '';
+    for (const attr of REMOVE_ATTRIBUTE) {
+      this.composerInput.removeAttribute(attr);
+    }
     this.composerInput.setAttribute('aria-hidden', 'true');
     this.target.style.position = 'relative';
     this.target.style.background = 'transparent';
@@ -211,3 +211,11 @@ class SmartComposer {
 export default SmartComposer;
 
 module.exports = SmartComposer;
+const REMOVE_ATTRIBUTE = [
+  'id',
+  'value',
+  'placeholder',
+  'name',
+  'data-testid',
+  'type',
+];
