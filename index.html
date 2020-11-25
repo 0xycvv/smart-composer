@@ -30,8 +30,8 @@
       const smInstance = new SmartComposer({
         target: 'textarea',
         triggerKey: ' ',
-        predict: async (sm) => {
-          const words = await suggestAPI(sm.valueBeforePredict);
+        predict: async (sc) => {
+          const words = await suggestAPI(sc.valueBeforePredict);
           if (words[0]) {
             return words[0].word;
           }
@@ -43,11 +43,13 @@
         target: 'input-1',
         triggerKey: '@',
         defaultPredictValue: 'gmail.com',
-        predict: (sm) => {
-          const got = domains.find((d) =>
-            d.startsWith(sm.valueAfterPredict),
-          );
-          return got;
+        predict: (sc) => {
+          if (sc.valueAfterPredict.trim() !== '') {
+            const got = domains.find((d) =>
+              d.startsWith(sc.valueAfterPredict),
+            );
+            return got;
+          }
         },
       });
       i.attach();

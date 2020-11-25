@@ -136,9 +136,9 @@ class SmartComposer {
       this.composerInput.removeAttribute(attr);
     }
     this.composerInput.setAttribute('aria-hidden', 'true');
+    this.composerInput.setAttribute('aria-readonly', 'true');
     this.target.style.position = 'relative';
     this.target.style.background = 'transparent';
-    this.target.setAttribute('aria-readonly', 'true');
   }
 
   private checkParentPosition() {
@@ -168,6 +168,10 @@ class SmartComposer {
 
   private handleInput(e: InputEvent) {
     if (this.isPredicating) {
+      if (e.data === this.config.triggerKey) {
+        this.clear();
+        return;
+      }
       if (!this.composerInput.value.startsWith(this.target.value)) {
         this.callPredict().then((res) => {
           if (res) {
