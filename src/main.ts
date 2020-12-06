@@ -79,6 +79,10 @@ class SmartComposer {
     }
   }
 
+  detach() {
+    this.detachElementEvent();
+  }
+
   clear() {
     this.composerInput.value = '';
     this.predicted = '';
@@ -172,6 +176,10 @@ class SmartComposer {
         this.clear();
         return;
       }
+      if (this.composerInput.value === this.target.value) {
+        this.clear();
+        return;
+      }
       if (!this.composerInput.value.startsWith(this.target.value)) {
         this.callPredict().then((res) => {
           if (res) {
@@ -205,6 +213,19 @@ class SmartComposer {
       this.handleKeyDown.bind(this),
     );
     this.target.addEventListener(
+      'input',
+      // @ts-ignore
+      this.handleInput.bind(this),
+    );
+  }
+
+  private detachElementEvent() {
+    this.target.removeEventListener(
+      'keydown',
+      // @ts-ignore
+      this.handleKeyDown.bind(this),
+    );
+    this.target.removeEventListener(
       'input',
       // @ts-ignore
       this.handleInput.bind(this),
